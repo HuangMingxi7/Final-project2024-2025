@@ -5,12 +5,15 @@ public class main {
     public static void main(String[] args) {
         ArrayList<BusSchedule> schedules = new ArrayList<>();
         ArrayList<Passenger> passengers = new ArrayList<>();
+        ArrayList<Driver> drivers = new ArrayList<>();
         ArrayList<Technician> technicians = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        Manager manager = new Manager("MatthewHuang", "123456789", "Office101");
+        // 初始化数据
+        Manager manager = new Manager("Alice", "123456789", "Office101");
         schedules.add(new BusSchedule("1", "08:00 AM", "10:00 AM", "B1"));
-        technicians.add(new Technician("Louis Tech", "555555555", "Engine Specialist"));
+        drivers.add(new Driver("John Driver", "987654321", "DL12345"));
+        technicians.add(new Technician("Mike Tech", "555555555", "Engine Specialist"));
 
         boolean running = true;
 
@@ -19,9 +22,10 @@ public class main {
             System.out.println("1. View Schedules");
             System.out.println("2. Add Schedule (Manager)");
             System.out.println("3. Book Ticket (Passenger)");
-            System.out.println("4. Repair Bus (Technician)");
-            System.out.println("5. View All Data");
-            System.out.println("6. Exit");
+            System.out.println("4. Assign Driver to Bus");
+            System.out.println("5. Repair Bus (Technician)");
+            System.out.println("6. View All Data");
+            System.out.println("7. Exit");
             System.out.print("Choose an option: ");
 
             int choice;
@@ -46,14 +50,18 @@ public class main {
                     break;
 
                 case 4:
-                    repairBus(technicians, schedules, scanner);
+                    assignDriver(drivers, schedules, scanner);
                     break;
 
                 case 5:
-                    viewAllData(schedules, passengers, technicians);
+                    repairBus(technicians, schedules, scanner);
                     break;
 
                 case 6:
+                    viewAllData(schedules, passengers, drivers, technicians);
+                    break;
+
+                case 7:
                     System.out.println("Exiting the system. Goodbye!");
                     running = false;
                     break;
@@ -117,12 +125,44 @@ public class main {
         }
     }
 
-    private static void repairBus(ArrayList<Technician> technicians, ArrayList<BusSchedule> schedules, Scanner scanner) {
-        if (technicians.isEmpty()) {
-            System.out.println("No technicians available.");
+    private static void assignDriver(ArrayList<Driver> drivers, ArrayList<BusSchedule> schedules, Scanner scanner) {
+        if (drivers.isEmpty()) {
+            System.out.println("No drivers available.");
             return;
         }
 
+        if (schedules.isEmpty()) {
+            System.out.println("No schedules available.");
+            return;
+        }
+
+        System.out.println("Available Drivers:");
+        for (int i = 0; i < drivers.size(); i++) {
+            System.out.println((i + 1) + ". " + drivers.get(i));
+        }
+
+        System.out.println("Available Schedules:");
+        for (int i = 0; i < schedules.size(); i++) {
+            System.out.println((i + 1) + ". " + schedules.get(i));
+        }
+
+        try {
+            System.out.print("Choose a driver (number, sorry we only have 1 right now): ");
+            int driverChoice = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Choose a schedule (number): ");
+            int scheduleChoice = Integer.parseInt(scanner.nextLine());
+
+            Driver chosenDriver = drivers.get(driverChoice - 1);
+            BusSchedule chosenSchedule = schedules.get(scheduleChoice - 1);
+
+            chosenDriver.assignBus(new Bus(chosenSchedule.getBusNumber()));
+        } catch (Exception e) {
+            System.out.println("Invalid input! Returning to main menu.");
+        }
+    }
+
+    private static void repairBus(ArrayList<Technician> technicians, ArrayList<BusSchedule> schedules, Scanner scanner) {
         System.out.println("Available Technicians:");
         for (int i = 0; i < technicians.size(); i++) {
             System.out.println((i + 1) + ". " + technicians.get(i));
@@ -134,7 +174,7 @@ public class main {
         }
 
         try {
-            System.out.print("Choose a technician (number, we only have 1 right now): ");
+            System.out.print("Choose a technician (number, sorry we only have 1 right now): ");
             int techChoice = Integer.parseInt(scanner.nextLine());
             System.out.print("Choose a schedule (number): ");
             int scheduleChoice = Integer.parseInt(scanner.nextLine());
@@ -149,12 +189,15 @@ public class main {
     }
 
     private static void viewAllData(ArrayList<BusSchedule> schedules, ArrayList<Passenger> passengers,
-                                    ArrayList<Technician> technicians) {
+                                    ArrayList<Driver> drivers, ArrayList<Technician> technicians) {
         System.out.println("\n--- All Schedules ---");
         for (BusSchedule s : schedules) System.out.println(s);
 
         System.out.println("\n--- All Passengers ---");
         for (Passenger p : passengers) System.out.println(p);
+
+        System.out.println("\n--- All Drivers ---");
+        for (Driver d : drivers) System.out.println(d);
 
         System.out.println("\n--- All Technicians ---");
         for (Technician t : technicians) System.out.println(t);
