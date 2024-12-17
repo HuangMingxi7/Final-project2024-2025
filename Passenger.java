@@ -11,7 +11,8 @@ public class Passenger extends Person {
     }
 
     public void bookTicket(BusSchedule schedule) {
-        System.out.println(getName() + " booked a ticket for Bus " + schedule.getBusNumber() + " at " + schedule.getDepartureTime());
+        System.out.println(getName() + " booked a ticket for Bus " 
+                           + schedule.getBusNumber() + " at " + schedule.getDepartureTime());
     }
 
     public void cancelTicket() {

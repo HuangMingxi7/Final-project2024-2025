@@ -2,9 +2,16 @@ public class Bus {
     private String busNumber;
     private int capacity;
 
+    
     public Bus(String busNumber, int capacity) {
         this.busNumber = busNumber;
         this.capacity = capacity;
+    }
+
+    
+    public Bus(String busNumber) {
+        this.busNumber = busNumber;
+        this.capacity = 0; 
     }
 
     public String getBusNumber() {

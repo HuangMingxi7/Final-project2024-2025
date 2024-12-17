@@ -4,6 +4,7 @@ public class BusSchedule {
     private String arrivalTime;
     private String busNumber;
 
+   
     public BusSchedule(String scheduleId, String departureTime, String arrivalTime, String busNumber) {
         this.scheduleId = scheduleId;
         this.departureTime = departureTime;
@@ -11,6 +12,7 @@ public class BusSchedule {
         this.busNumber = busNumber;
     }
 
+    
     public String getScheduleId() {
         return scheduleId;
     }
@@ -29,6 +31,7 @@ public class BusSchedule {
 
     @Override
     public String toString() {
-        return "Schedule ID: " + scheduleId + ", Departure: " + departureTime + ", Arrival: " + arrivalTime + ", Bus: " + busNumber;
+        return "Schedule ID: " + scheduleId + ", Departure: " + departureTime
+               + ", Arrival: " + arrivalTime + ", Bus: " + busNumber;
     }
 }

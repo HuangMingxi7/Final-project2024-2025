@@ -6,16 +6,12 @@ public class Driver extends Person {
         this.licenseNumber = licenseNumber;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
     public void assignBus(Bus bus) {
         System.out.println(getName() + " is assigned to Bus " + bus.getBusNumber());
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", License: " + licenseNumber;
+        return super.toString() + ", License Number: " + licenseNumber;
     }
 }
